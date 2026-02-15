@@ -10,7 +10,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 1,
   workers: 2,
-  reporter: "html",
+  reporter: [["list"], ["allure-playwright"]],
   use: {
     baseURL: process.env.TEST_ENV_URL || "https://qa3.negsim.com",
     trace: "on-first-retry",
@@ -22,7 +22,12 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        screenshot: "only-on-failure", 
+        video: "retain-on-failure", 
+        trace: "on-first-retry",
+      },
     },
     // {
     //   name: "firefox",
