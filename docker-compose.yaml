@@ -1,0 +1,14 @@
+services:
+  playwright-tests:
+    build: .
+    container_name: facilitators-tests
+    network_mode: host
+    volumes:
+      - ./allure-results:/app/allure-results
+      - ./allure-report:/app/allure-report
+    environment:
+      RUN_ENV: docker
+      TEST_SUITE: facilitators
+      BROWSER: chromium
+    command: sh -c "sh allure-env.sh && pnpm run test:allure && pnpm run allure:generate"
+

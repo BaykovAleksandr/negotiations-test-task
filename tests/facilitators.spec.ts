@@ -4,7 +4,7 @@ import { SettingsPage } from "../pages/SettingsPage";
 import { FacilitatorsPage } from "../pages/FacilitatorsPage";
 
 const testUser = {
-  email: "test_user03@negotiations.com",
+  email: "test_user04@negotiations.com",
   password: "Test_Pass_ForUser",
 };
 

@@ -7,7 +7,7 @@ export class LoginPage {
   async goto(url: string) {
     await allure.step("Open login page", async () => {
       await this.page.goto(url, {
-        waitUntil: "domcontentloaded",
+        waitUntil: "networkidle",
         timeout: 60000,
       });
     });

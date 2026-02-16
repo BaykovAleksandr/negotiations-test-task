@@ -5,7 +5,7 @@ dotenv.config();
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 30000,
+  timeout: 60000,
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 1,
@@ -17,15 +17,18 @@ export default defineConfig({
     screenshot: "only-on-failure",
     ignoreHTTPSErrors: true,
     navigationTimeout: 60000,
-    actionTimeout: 15000,
+    actionTimeout: 30000,
+    launchOptions: {
+      slowMo: 50,
+    },
   },
   projects: [
     {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
-        screenshot: "only-on-failure", 
-        video: "retain-on-failure", 
+        screenshot: "only-on-failure",
+        video: "retain-on-failure",
         trace: "on-first-retry",
       },
     },
