@@ -11,10 +11,10 @@ services:
       TEST_SUITE: facilitators
       BROWSER: chromium
     command:
-      - sh
-      - -c
-      - |
-        mkdir -p /app/allure-results /app/allure-report
-        sh allure-env.sh
-        pnpm run test:allure || true
-        pnpm run allure:generate || true
+  - sh
+  - -c
+  - |
+    mkdir -p /app/allure-results /app/allure-report
+    sh allure-env.sh
+    pnpm run test:allure || true
+    pnpm run allure:generate
