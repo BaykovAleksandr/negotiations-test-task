@@ -1,20 +1,17 @@
 pipeline {
   agent any
 
-  stages {
-    stage('Run tests') {
-      steps {
-        sh 'docker compose up --build --abort-on-container-exit'
-      }
-    }
+stage('Run tests') {
+  steps {
+    sh 'mkdir -p allure-report allure-results'
+    sh 'docker compose up --build --abort-on-container-exit'
   }
+}
 
-  post {
-    always {
-      sh 'ls -la'
-      sh 'ls -la allure-report || true'
-      archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
-      sh 'docker compose down -v'
-    }
+post {
+  always {
+    archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+    sh 'docker compose down -v'
   }
+}
 }

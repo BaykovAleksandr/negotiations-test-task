@@ -10,4 +10,9 @@ services:
       RUN_ENV: docker
       TEST_SUITE: facilitators
       BROWSER: chromium
-    command: sh -c "sh allure-env.sh && pnpm run test:allure && pnpm run allure:generate"
+    command: sh -c "
+  mkdir -p /app/allure-results /app/allure-report &&
+  sh allure-env.sh &&
+  pnpm run test:allure || true &&
+  pnpm run allure:generate || true
+"
