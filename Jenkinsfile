@@ -2,24 +2,19 @@ pipeline {
   agent any
 
   stages {
-    stage('Checkout') {
+    stage('Run tests') {
       steps {
-        checkout scm
-      }
-    }
-
-    stage('Run tests in Docker') {
-      steps {
-        sh '''
-          docker compose up --build --abort-on-container-exit
-        '''
+        sh 'docker compose up --build --abort-on-container-exit'
       }
     }
   }
 
   post {
     always {
-      archiveArtifacts artifacts: 'allure-report/**', fingerprint: true
+      sh 'ls -la'
+      sh 'ls -la allure-report || true'
+      archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+      sh 'docker compose down -v'
     }
   }
 }

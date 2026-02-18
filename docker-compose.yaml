@@ -11,4 +11,3 @@ services:
       TEST_SUITE: facilitators
       BROWSER: chromium
     command: sh -c "sh allure-env.sh && pnpm run test:allure && pnpm run allure:generate"
-
