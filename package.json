@@ -1,23 +1,31 @@
 {
   "name": "negotiations",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
     "test:allure": "npx playwright test --reporter=line,allure-playwright",
     "allure:generate": "allure generate ./allure-results --clean",
-    "allure:open": "allure open"
+    "allure:open": "allure open",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.6.5",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "allure-commandline": "^2.36.0",
     "allure-playwright": "^3.4.5",
-    "dotenv": "^17.3.1"
+    "dotenv": "^17.3.1",
+    "eslint": "^10.0.1",
+    "typescript-eslint": "^8.56.0"
   }
 }

@@ -144,7 +144,7 @@ export class FacilitatorsPage {
     });
   }
 
-  async clickAnalyticsIcon(row: Locator) {
+  async clickAnalyticsIcon() {
     await allure.step("Click analytics icon", async () => {
       const expandedContainer = this.page
         .locator("sim-enterprise-classes-expand-grid")
