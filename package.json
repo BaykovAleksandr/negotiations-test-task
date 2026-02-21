@@ -10,7 +10,17 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:with-lint": "npm run lint && npm run test"
+    "test:with-lint": "npm run lint && npm run test",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -28,6 +38,8 @@
     "eslint": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "3.8.1",
     "typescript-eslint": "^8.56.0"
   }
