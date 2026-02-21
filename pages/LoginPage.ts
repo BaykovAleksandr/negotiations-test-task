@@ -27,9 +27,7 @@ export class LoginPage {
     });
 
     await allure.step("Click login button", async () => {
-      const loginButton = this.page.locator(
-        'button[data-automation="login-button-layout-login"]',
-      );
+      const loginButton = this.page.locator('button[data-automation="login-button-layout-login"]');
       await loginButton.click();
     });
   }

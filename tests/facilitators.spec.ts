@@ -37,8 +37,7 @@ test.describe("Facilitators page functional tests", () => {
 
   test("should sort by Organization column (known 500 error)", async () => {
     await facilitatorsPage.sortBy("Organization");
-    const errorElement =
-      await facilitatorsPage.page.locator("text=We're Sorry!");
+    const errorElement = await facilitatorsPage.page.locator("text=We're Sorry!");
     await expect(errorElement).toHaveCount(0);
   });
 
@@ -59,9 +58,7 @@ test.describe("Facilitators page functional tests", () => {
   test("BUG: email invitation can be sent without First Name and Message", async () => {
     await facilitatorsPage.openEmailInvitationForm();
     await facilitatorsPage.fillEmailOnly("test@example.com");
-    const sendButton = facilitatorsPage.page.locator(
-      'button:has-text("Send Invitation")',
-    );
+    const sendButton = facilitatorsPage.page.locator('button:has-text("Send Invitation")');
     await expect(sendButton).toBeEnabled();
     await sendButton.click();
     const errorMessage = facilitatorsPage.page.locator(".error-message");
@@ -80,10 +77,9 @@ test.describe("Facilitators page functional tests", () => {
 
   test("should reinstate facilitator from archive and add to end of active list", async () => {
     await facilitatorsPage.expandArchivedSection();
-    await facilitatorsPage.page.waitForSelector(
-      ".archived-enterprise-facilitators tbody tr",
-      { timeout: 5000 },
-    );
+    await facilitatorsPage.page.waitForSelector(".archived-enterprise-facilitators tbody tr", {
+      timeout: 5000,
+    });
 
     const archivedNames = await facilitatorsPage.getArchivedFacilitatorNames();
     expect(archivedNames.length).toBeGreaterThan(0);
@@ -98,8 +94,7 @@ test.describe("Facilitators page functional tests", () => {
 
     await archivedRow.waitFor({ state: "detached", timeout: 5000 });
 
-    const activeNamesAfter =
-      await facilitatorsPage.getAllActiveFacilitatorNames();
+    const activeNamesAfter = await facilitatorsPage.getAllActiveFacilitatorNames();
     expect(activeNamesAfter).toContain(facilitatorToReinstate);
   });
 });

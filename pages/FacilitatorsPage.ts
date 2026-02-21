@@ -20,9 +20,7 @@ export class FacilitatorsPage {
     this.addFacilitatorButton = this.page.locator(
       '[data-automation="add-facilitators-button-layout-enterprise"]',
     );
-    this.searchButton = this.page.locator(
-      '[data-automation="search-button-shared"]',
-    );
+    this.searchButton = this.page.locator('[data-automation="search-button-shared"]');
     this.filterPanel = this.page.locator("sim-filter-panel");
     this.activeSection = this.page.locator(
       'sim-enterprise-facilitators-section:has-text("Active")',
@@ -39,9 +37,7 @@ export class FacilitatorsPage {
     this.emailInputInInviteForm = this.page.locator(
       '[data-automation="email-sim-input-layout-enterprise"] input',
     );
-    this.sendInvitationButton = this.page.locator(
-      'button:has-text("Send Invitation")',
-    );
+    this.sendInvitationButton = this.page.locator('button:has-text("Send Invitation")');
 
     this.addFacilitatorModal = this.page.locator(".add-facilitators-modal");
     this.filtersButton = this.addFacilitatorModal.locator(
@@ -50,8 +46,7 @@ export class FacilitatorsPage {
     this.searchButtonInModal = this.addFacilitatorModal.locator(
       '[data-automation="search-button-shared"]',
     );
-    this.dateFilterField =
-      this.addFacilitatorModal.locator(".label-date-range");
+    this.dateFilterField = this.addFacilitatorModal.locator(".label-date-range");
   }
 
   getFacilitatorRowByName(name: string): Locator {
@@ -71,10 +66,7 @@ export class FacilitatorsPage {
 
   async sortBy(columnName: string) {
     await allure.step(`Sort by column: ${columnName}`, async () => {
-      await this.activeSection
-        .locator(`th:has-text("${columnName}")`)
-        .first()
-        .click();
+      await this.activeSection.locator(`th:has-text("${columnName}")`).first().click();
       await this.page.waitForLoadState("networkidle");
     });
   }
@@ -107,9 +99,7 @@ export class FacilitatorsPage {
   async expandArchivedSection() {
     await allure.step("Expand archived section", async () => {
       const archivedHeader = this.archivedSection.locator("h3");
-      const isCollapsed =
-        (await archivedHeader.locator('svg-icon[src*="angle-up"]').count()) ===
-        0;
+      const isCollapsed = (await archivedHeader.locator('svg-icon[src*="angle-up"]').count()) === 0;
       if (isCollapsed) {
         await archivedHeader.click();
       }
@@ -146,9 +136,7 @@ export class FacilitatorsPage {
 
   async clickAnalyticsIcon() {
     await allure.step("Click analytics icon", async () => {
-      const expandedContainer = this.page
-        .locator("sim-enterprise-classes-expand-grid")
-        .first();
+      const expandedContainer = this.page.locator("sim-enterprise-classes-expand-grid").first();
       await expandedContainer.locator(".link").first().click();
     });
   }
@@ -157,9 +145,7 @@ export class FacilitatorsPage {
     await allure.step("Select first user in modal", async () => {
       const row = this.addFacilitatorModal.locator("tbody tr").first();
       await row.hover();
-      const checkboxWrapper = row.locator(
-        "td.row-selector label.checkboxWrapper",
-      );
+      const checkboxWrapper = row.locator("td.row-selector label.checkboxWrapper");
       await checkboxWrapper.click();
       const checkbox = row.locator('input[type="checkbox"]');
       await expect(checkbox).toBeChecked({ timeout: 5000 });
@@ -213,11 +199,7 @@ export class FacilitatorsPage {
       const rows = this.archivedSection.locator("tbody tr");
       const count = await rows.count();
       for (let i = 0; i < count; i++) {
-        const name = await rows
-          .nth(i)
-          .locator(".name-content")
-          .first()
-          .textContent();
+        const name = await rows.nth(i).locator(".name-content").first().textContent();
         if (name) names.push(name.trim());
       }
     });
@@ -230,11 +212,7 @@ export class FacilitatorsPage {
       const rows = this.activeSection.locator("tbody tr");
       const count = await rows.count();
       for (let i = 0; i < count; i++) {
-        const name = await rows
-          .nth(i)
-          .locator(".name-content")
-          .first()
-          .textContent();
+        const name = await rows.nth(i).locator(".name-content").first().textContent();
         if (name) names.push(name.trim());
       }
     });
@@ -248,9 +226,7 @@ export class FacilitatorsPage {
       while (hasNext) {
         const pageNames = await this.getActiveFacilitatorNames();
         allNames.push(...pageNames);
-        const nextButton = this.activeSection.locator(
-          ".pagination .pages.next:not(.disabled)",
-        );
+        const nextButton = this.activeSection.locator(".pagination .pages.next:not(.disabled)");
         if ((await nextButton.count()) > 0) {
           await nextButton.click();
           await this.page.waitForLoadState("networkidle");

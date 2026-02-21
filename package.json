@@ -6,11 +6,11 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:allure": "npx playwright test --reporter=line,allure-playwright",
-    "allure:generate": "allure generate ./allure-results --clean",
-    "allure:open": "allure open",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:with-lint": "npm run lint && npm run test"
   },
   "keywords": [],
   "author": "",
@@ -19,13 +19,16 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.2.3",
+    "@types/node": "^25.3.0",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@typescript-eslint/parser": "^8.56.0",
     "allure-commandline": "^2.36.0",
     "allure-playwright": "^3.4.5",
     "dotenv": "^17.3.1",
     "eslint": "^10.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "prettier": "3.8.1",
     "typescript-eslint": "^8.56.0"
   }
 }
