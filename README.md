@@ -8,6 +8,7 @@ Automated UI tests for the **Facilitators** page in **Settings** section.
 Tech stack:
 - Playwright / TypeScript
 - Allure Report
+- CI/CD with Jenkins
 
 ---
 
@@ -73,3 +74,31 @@ This will:
 <img width="1920" height="980" alt="docker" src="https://github.com/user-attachments/assets/a0aa2a3f-83d7-45f0-877b-436b242d0644" />
 <img width="1920" height="989" alt="allure3" src="https://github.com/user-attachments/assets/9207eef8-44dc-4ac2-a0b0-ec9f94ea21a9" />
 <img width="1920" height="984" alt="allure2" src="https://github.com/user-attachments/assets/55342b36-e648-440b-babf-2ec0047513a0" />
+
+
+
+🔄 CI/CD с Jenkins
+
+
+📥 Run and setup
+
+
+Script:
+```
+git clone https://github.com/BaykovAleksandr/negotiations-test-task.git
+```
+```
+cd negotiations-test-task
+```
+
+Make the script executable and run
+
+Script:
+
+```
+chmod +x setup-jenkins.sh
+```
+
+```
+./setup-jenkins.sh
+```
