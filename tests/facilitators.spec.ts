@@ -31,14 +31,13 @@ test.describe("Facilitators page functional tests", () => {
   test("should expand facilitator stats and click analytics icon (bug)", async () => {
     const firstRow = facilitatorsPage.getFirstActiveRow();
     await facilitatorsPage.expandStats(firstRow);
-    await facilitatorsPage.clickAnalyticsIcon(firstRow);
+    await facilitatorsPage.clickAnalyticsIcon();
     await expect(firstRow).toBeVisible();
   });
 
   test("should sort by Organization column (known 500 error)", async () => {
     await facilitatorsPage.sortBy("Organization");
-    const errorElement = await facilitatorsPage.page.locator("text=We're Sorry!");
-    await expect(errorElement).toHaveCount(0);
+    await expect(facilitatorsPage.weAreSorryError).toHaveCount(0);
   });
 
   test("should open +Facilitator modal and verify UI elements", async () => {
@@ -58,11 +57,9 @@ test.describe("Facilitators page functional tests", () => {
   test("BUG: email invitation can be sent without First Name and Message", async () => {
     await facilitatorsPage.openEmailInvitationForm();
     await facilitatorsPage.fillEmailOnly("test@example.com");
-    const sendButton = facilitatorsPage.page.locator('button:has-text("Send Invitation")');
-    await expect(sendButton).toBeEnabled();
-    await sendButton.click();
-    const errorMessage = facilitatorsPage.page.locator(".error-message");
-    await expect(errorMessage).toHaveCount(0);
+    await expect(facilitatorsPage.sendInvitationButton).toBeEnabled();
+    await facilitatorsPage.sendInvitationButton.click();
+    await expect(facilitatorsPage.errorMessageInInviteForm).toHaveCount(0);
   });
 
   test("should send internal invitation to existing user", async () => {
@@ -70,25 +67,21 @@ test.describe("Facilitators page functional tests", () => {
     const userName = await facilitatorsPage.getFirstUserNameInModal();
     await facilitatorsPage.selectFirstUserInModal();
     await facilitatorsPage.clickSendInternalInvitation();
-    await facilitatorsPage.page.waitForTimeout(2000);
+    await facilitatorsPage.waitAfterSendingInvitation();
     const isPresent = await facilitatorsPage.isUserInSentInvitations(userName);
     expect(isPresent).toBeTruthy();
   });
 
   test("should reinstate facilitator from archive and add to end of active list", async () => {
     await facilitatorsPage.expandArchivedSection();
-    await facilitatorsPage.page.waitForSelector(".archived-enterprise-facilitators tbody tr", {
-      timeout: 5000,
-    });
+    await facilitatorsPage.waitForArchivedTableRows(5000);
 
     const archivedNames = await facilitatorsPage.getArchivedFacilitatorNames();
     expect(archivedNames.length).toBeGreaterThan(0);
     const facilitatorToReinstate = archivedNames[0];
     console.log(`Reinstating facilitator: "${facilitatorToReinstate}"`);
 
-    const archivedRow = facilitatorsPage.archivedSection
-      .locator(`tr:has-text("${facilitatorToReinstate}")`)
-      .first();
+    const archivedRow = facilitatorsPage.getArchivedRowByName(facilitatorToReinstate);
     await facilitatorsPage.clickActionsOnArchivedRow(archivedRow);
     await facilitatorsPage.clickReinstate();
 

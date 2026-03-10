@@ -15,6 +15,14 @@ export class FacilitatorsPage {
   public addFacilitatorModal: Locator;
   public filtersButton: Locator;
   public searchButtonInModal: Locator;
+  /** Сообщение об ошибке 500 на странице */
+  public weAreSorryError: Locator;
+  /** Сообщение об ошибке в форме приглашения по email */
+  public errorMessageInInviteForm: Locator;
+  /** Строки таблицы архивированных фасилитаторов */
+  public archivedTableRows: Locator;
+  /** Кнопка Reinstate в меню действий */
+  public reinstateButton: Locator;
 
   constructor(public page: Page) {
     this.addFacilitatorButton = this.page.locator(
@@ -47,6 +55,28 @@ export class FacilitatorsPage {
       '[data-automation="search-button-shared"]',
     );
     this.dateFilterField = this.addFacilitatorModal.locator(".label-date-range");
+    this.weAreSorryError = this.page.locator("text=We're Sorry!");
+    this.errorMessageInInviteForm = this.page.locator(".error-message");
+    this.archivedTableRows = this.page.locator(".archived-enterprise-facilitators tbody tr");
+    this.reinstateButton = this.page.locator("text=Reinstate");
+  }
+
+  /** Строка архивированного фасилитатора по имени */
+  getArchivedRowByName(name: string): Locator {
+    return this.archivedSection.locator(`tr:has-text("${name}")`).first();
+  }
+
+  /** Дождаться появления строк в таблице архивированных (внутри секции Archived) */
+  async waitForArchivedTableRows(timeout = 5000): Promise<void> {
+    await this.archivedSection.locator("tbody tr").first().waitFor({
+      state: "attached",
+      timeout,
+    });
+  }
+
+  /** Ожидание после отправки приглашения (обновление списка Sent Invitations) */
+  async waitAfterSendingInvitation(ms = 2000): Promise<void> {
+    await this.page.waitForTimeout(ms);
   }
 
   getFacilitatorRowByName(name: string): Locator {
@@ -114,7 +144,7 @@ export class FacilitatorsPage {
 
   async clickReinstate() {
     await allure.step("Click Reinstate", async () => {
-      await this.page.locator("text=Reinstate").click();
+      await this.reinstateButton.click();
     });
   }
 
@@ -137,7 +167,10 @@ export class FacilitatorsPage {
   async clickAnalyticsIcon() {
     await allure.step("Click analytics icon", async () => {
       const expandedContainer = this.page.locator("sim-enterprise-classes-expand-grid").first();
-      await expandedContainer.locator(".link").first().click();
+      await expandedContainer.waitFor({ state: "visible", timeout: 10000 });
+      const analyticsLink = expandedContainer.locator(".link").first();
+      await analyticsLink.waitFor({ state: "visible", timeout: 10000 });
+      await analyticsLink.click();
     });
   }
 
